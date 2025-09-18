@@ -1,1 +1,1 @@
-scikit learn, linear regression, logitstic regression
+scikit learn, linear regression, logistic regression
