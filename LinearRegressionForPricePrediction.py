@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import xgboost as xgb 
 
 
 housing_data = pd.read_csv('./housing.csv')
@@ -57,6 +58,20 @@ rf2 = RandomForestRegressor(n_estimators=1000,
 
 rf2.fit(x_train, y_train)
 print("Random Forest 2 Training_score : ", rf2.score(x_test, y_test))
+
+xgb_reg = xgb.XGBRegressor(
+    objective="reg:squarederror",  # 適合迴歸任務
+    n_estimators=100,
+    learning_rate=0.1,
+    max_depth=6,
+    random_state=42
+)
+
+x_train.columns = [str(col).replace("[","").replace("]","").replace("<","").replace(">","") for col in x_train.columns]
+x_test.columns = [str(col).replace("[","").replace("]","").replace("<","").replace(">","") for col in x_test.columns]
+xgb_reg.fit(x_train, y_train)
+y_pred_xgb = xgb_reg.predict(x_test)
+print("XGBoost Training_score : ", r2_score(y_test, y_pred_xgb)) 
 
 fig, ax = plt.subplots(figsize=(12,8))
 
