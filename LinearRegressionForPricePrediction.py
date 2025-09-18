@@ -2,18 +2,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-houseing_data = pd.read_csv('./housing.csv')
-houseing_data.sample(5)
-houseing_data = houseing_data.dropna()
-print(houseing_data.shape)
-houseing_data.loc[houseing_data['median_house_value'] == 500001].count
-houseing_data = houseing_data.drop(houseing_data.loc[houseing_data['median_house_value'] == 500001].index) 
-print(houseing_data.shape)
-houseing_data['ocean_proximity'].unique() 
-houseing_data = pd.get_dummies(houseing_data, columns=['ocean_proximity'])
-print(houseing_data.shape)
-X = houseing_data.drop('median_house_value', axis=1)
-Y = houseing_data['median_house_value']
+housing_data = pd.read_csv('./housing.csv')
+housing_data.sample(5)
+housing_data = housing_data.dropna()
+print(housing_data.shape)
+housing_data.loc[housing_data['median_house_value'] == 500001].count
+houseing_data = housing_data.drop(housing_data.loc[housing_data['median_house_value'] == 500001].index) 
+print(housing_data.shape)
+housing_data['ocean_proximity'].unique() 
+housing_data = pd.get_dummies(housing_data, columns=['ocean_proximity'])
+print(housing_data.shape)
+X = housing_data.drop('median_house_value', axis=1)
+Y = housing_data['median_house_value']
 print(X.columns)
 
 from sklearn.model_selection import train_test_split
@@ -41,6 +41,22 @@ print(df_pred_actual.head(10))
 
 from sklearn.metrics import r2_score
 print('Testing_score :', r2_score(y_test, y_pred))
+
+from sklearn.ensemble import RandomForestRegressor
+rf = RandomForestRegressor()
+rf.fit(x_train, y_train)
+
+rf_y_pred = rf.predict(x_test)
+print("Random Forest Training_score : ", rf.score(x_test, y_test))
+
+
+rf2 = RandomForestRegressor(n_estimators=1000,
+                             min_samples_split=10,
+                             max_depth=14,
+                             random_state=42)
+
+rf2.fit(x_train, y_train)
+print("Random Forest 2 Training_score : ", rf2.score(x_test, y_test))
 
 fig, ax = plt.subplots(figsize=(12,8))
 
