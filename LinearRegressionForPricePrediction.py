@@ -7,7 +7,7 @@ housing_data.sample(5)
 housing_data = housing_data.dropna()
 print(housing_data.shape)
 housing_data.loc[housing_data['median_house_value'] == 500001].count
-houseing_data = housing_data.drop(housing_data.loc[housing_data['median_house_value'] == 500001].index) 
+housing_data = housing_data.drop(housing_data.loc[housing_data['median_house_value'] == 500001].index) 
 print(housing_data.shape)
 housing_data['ocean_proximity'].unique() 
 housing_data = pd.get_dummies(housing_data, columns=['ocean_proximity'])
